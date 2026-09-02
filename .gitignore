@@ -1,0 +1,22 @@
+# --- Microchip / Atmel Studio ---
+.vs/
+Debug/
+Release/
+*.atsuo
+*.elf
+*.hex
+*.lss
+*.map
+*.srec
+*.o
+*.d
+Makefile
+makedep.mk
+
+# --- Proteus ---
+Project Backups/
+*.workspace
+*.pdsprj.*.workspace
+
+# --- Archivos temporales ---
+*.zip
