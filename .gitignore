@@ -20,3 +20,9 @@ Project Backups/
 
 # --- Archivos temporales ---
 *.zip
+
+# --- Archivos de Python ---
+*.pyc
+*.pyd
+.venv/
+__pycache__/
