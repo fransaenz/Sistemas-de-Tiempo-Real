@@ -1,6 +1,6 @@
 import unicodedata
 
-# atajo para crear una clase sin constructor (se usa para la clase Result)
+# atajo para crear una clase sin constructor (se usa para la clase Resultado)
 from dataclasses import dataclass 
 # Optional[int] significa 'un int o None' (solo documentación)
 from typing import Optional 
@@ -11,8 +11,8 @@ from vocabulario import VOCABULARIO
 # Si el robot suma una bebida nueva, agregarla al final de este bloque.
 (VODKA, FERNET, CAMPARI, COCA, SPRITE, NARANJA, CERVEZA, VINO, 
  GANCIA, LIMON, GIN, TONICA, RON, WHISKY, TEQUILA, VERMUT, 
- APEROL, CHAMPAGNE, SIDRA, BAILEYS, LICOR, ANANA, POMELO,
- AZUCAR, MENTA, SODA, TRIPLE_SEC, ANGOSTURA, CACHACA) = range(1, 30)
+ APEROL, CHAMPAGNE, SIDRA, BAILEYS, LICOR, POMELO,
+ AZUCAR, MENTA, SODA, TRIPLE_SEC, ANGOSTURA, CACHACA) = range(1, 29)
 
 # Palabra o frase que dice el usuario -> ID de bebida
 SINONIMOS = {
@@ -22,38 +22,37 @@ SINONIMOS = {
     "fernet": FERNET, "fernecito": FERNET, "ferno": FERNET, "branca": FERNET,
     "fernando": FERNET, "ferne": FERNET, "fernandito": FERNET,
   
-    "campari": CAMPARI,  "gancia": GANCIA, "limon": LIMON, 
-    "tonic": TONICA, "tonica": TONICA,
+    "campari": CAMPARI,  "gancia": GANCIA,
+    "tonic": TONICA, "tonica": TONICA, "baileys": BAILEYS,
 
     "coca": COCA, "coca cola": COCA, "cola": COCA, "coquita": COCA,
     
     "sprite": SPRITE, "spray": SPRITE, "sprayt": SPRITE, "esprai": SPRITE,
 
-    "naranja": NARANJA, "jugo de naranja": NARANJA, "jugo": NARANJA, 
-    "juguito": NARANJA, "jugo de naranjas": NARANJA, "naranjada": NARANJA,
+    "naranja": NARANJA,  "naranjada": NARANJA, "jugo": NARANJA, "juguito": NARANJA,
 
-    "cerveza": CERVEZA, "birra": CERVEZA, "pinta": CERVEZA, "lata": CERVEZA,
-    "porron": CERVEZA, "porroncito": CERVEZA, "quilmes": CERVEZA,
-    "brahma": CERVEZA, "stella": CERVEZA, "artois": CERVEZA, "ipa": CERVEZA,
-    "heineken": CERVEZA, "corona": CERVEZA, "andes": CERVEZA, "rabi": CERVEZA,
-    "cervecita": CERVEZA, "cerveza artesanal": CERVEZA, "birrin": CERVEZA,
+    "cerveza": CERVEZA, "birra": CERVEZA, "rabi": CERVEZA, "pinta": CERVEZA, "ipa": CERVEZA,
+    "lata": CERVEZA, "porron": CERVEZA, "porroncito": CERVEZA, "quilmes": CERVEZA, 
+    "brahma": CERVEZA, "stella": CERVEZA, "artois": CERVEZA, "heineken": CERVEZA, 
+    "corona": CERVEZA, "andes": CERVEZA, "cervecita": CERVEZA, "birrin": CERVEZA,
 
     "vino": VINO, "tinto": VINO, "blanco": VINO, "veneco": VINO, 
     "malbec": VINO, "cabernet": VINO, "merlot": VINO, "totin": VINO, 
 
-    "gin": GIN, "beefeater": GIN, "tanqueray": GIN,
+    "gin": GIN, "beefeater": GIN, "tanqueray": GIN, "ginebra": GIN, "ginebrita": GIN, "ginebrita": GIN,
     
     "ron": RON, "havana": RON, "bacardi": RON, "club": RON,
     
-    "whisky": WHISKY, "tequila": TEQUILA,
+    "whisky": WHISKY, "tequila": TEQUILA, "quilate": TEQUILA, 
+    
+    "jagger": LICOR, "jagermeister": LICOR, "licor": LICOR,
     
     "vermut": VERMUT, "vermu": VERMUT, "aperol": APEROL,
     
     "champan": CHAMPAGNE, "champagne": CHAMPAGNE, "sidra": SIDRA,
     
-    "baileys": BAILEYS, "licor": LICOR, "jagger": LICOR, "jagermeister": LICOR,
+    "pomelo" : POMELO, "limon": LIMON, "lima": LIMON, "soda": SODA,
     
-    "anana": ANANA, "piña": ANANA, "pomelo" : POMELO
 }
 
 # Si dicen SOLO esta bebida, se entiende este trago (lo elegís vos, uno por uno).
@@ -62,7 +61,6 @@ ATAJO_SOLO = {
     FERNET: 2,    # "fernet"  -> fernet con coca
     CAMPARI: 4,   # "campari" -> campari naranja
     GIN: 5,       # "gin"     -> gin tonic
-    APEROL: 17,   # "aperol"  -> aperol spritz
 }
 
 #  bebidas -> ID de trago (el que se manda por UART)
@@ -91,17 +89,18 @@ TRAGOS = {
     frozenset({SIDRA}): 20,                                # sidra
     frozenset({CHAMPAGNE}): 21,                            # champagne
     frozenset({BAILEYS}): 22,                              # baileys
-    frozenset({TEQUILA}): 24,                              # tequila
-    frozenset({WHISKY}): 25,                               # whisky
-    frozenset({VERMUT}): 27,                               # vermut
-    frozenset({RON}): 30,                                  # ron
-    frozenset({LICOR}): 31,                                # licor
+    frozenset({TEQUILA}): 23,                              # tequila
+    frozenset({WHISKY}): 24,                               # whisky
+    frozenset({VERMUT}): 25,                               # vermut
+    frozenset({RON}): 26,                                  # ron
+    frozenset({LICOR}): 27,                                # licor
+    frozenset({GANCIA}): 28,                               # gancia
     # --- tragos sin alcohol ---
-    frozenset({POMELO}): 32,                               # jugo de pomelo
-    frozenset({COCA}): 33,                                 # coca
-    frozenset({SPRITE}): 34,                               # sprite
-    frozenset({NARANJA}): 35,                              # jugo de naranja
-    frozenset({SODA}): 36,                                 # soda
+    frozenset({POMELO}): 29,                               # jugo de pomelo
+    frozenset({COCA}): 30,                                 # coca
+    frozenset({SPRITE}): 31,                               # sprite
+    frozenset({NARANJA}): 32,                              # jugo de naranja
+    frozenset({SODA}): 33,                                 # soda
 }
 
 # Bebidas que aparecen en algún trago (se calcula sola)
@@ -116,9 +115,9 @@ NOMBRES_DE_TRAGO = {
     "negroni": 9,
     "mojito": 10,
     "margarita": 11,
-    "daikiri": 12,
-    "caipirinha": 13,
-    "caipiroska": 14,
+    "daiquiri": 12, "daikiri": 12,
+    "caipirinha": 13, "caipiriña": 13,
+    "caipiroska": 14, "caipiroshka": 14, "caipirosca": 14,
     "tom": 15, "collins": 15,
     "old": 16, "fashioned": 16,
     "spritz": 17,
@@ -129,13 +128,19 @@ NOMBRES_DE_TRAGO = {
 # Palabras que SÍ cambian el resultado
 GENERICOS = {"trago", "chupi", "escabio", "escabiar", "ronda", "fizz"}   # piden algo sin decir qué
 HIELO = {"hielo", "hielos"}
-DOBLE = {"doble"}
 NEGACIONES = {"no", "tampoco", "nada", "ninguno", "ninguna", "nunca", "jamas"}
 EXCLUSION = {"sin"}
-CANCELACIONES = {"cancelar", "detener", "parar", "basta", "corta", "cortame"}
-CORTESIA = {"gracias"}
-REPETIR = {"otra"}
-CANTIDADES = {"un": 1, "una": 1, "dos": 2, "tres": 3, "cuatro": 4}
+CANCELACIONES = {"cancelar", "cancela", "cancelamelo", "cancelalo", 
+                 "detener", "detenete", "detenelo", 
+                 "frenar", "frename", "frenalo", "frena",
+                 "parar", "paralo", "parate",
+                 "espera", "esperame", "esperate", "basta", 
+                 "corta", "cortame", "cortalo", "alto"}
+CORTESIA = {"muchas", "gracias"}
+REPETIR = {"otra", "otro", "repetir", "repeti", "repetilo",
+            "repite", "igual", "idem", "lo mismo", "otra vez"}
+CANTIDADES = {"un": 1, "una": 1, "dos": 2, "doble": 2, "tres": 3, "triple": 3, "cuatro": 4}
+
 # Palabras que NO cambian el resultado, se ignoran
 IGNORADAS = {
     "vaso", "vasos", "jarra", "carton", "tetrabrik", "tetra",   # recipientes
@@ -147,9 +152,9 @@ IGNORADAS = {
 
 DESCONOCIDA = {"[unk]"}
  
-CONOCIDAS = (set(SINONIMOS) | set(NOMBRES_DE_TRAGO) | GENERICOS | HIELO | DOBLE
-             | NEGACIONES | EXCLUSION | CANCELACIONES | CORTESIA | REPETIR
-             | set(CANTIDADES) | IGNORADAS | DESCONOCIDA)
+CONOCIDAS = (set(SINONIMOS) | set(NOMBRES_DE_TRAGO) | GENERICOS | HIELO
+            | NEGACIONES | EXCLUSION | CANCELACIONES | CORTESIA | REPETIR
+            | set(CANTIDADES) | IGNORADAS | DESCONOCIDA)
 
 PEDIDO = "PEDIDO"
 CANCELAR = "CANCELAR"
@@ -163,15 +168,19 @@ NO_ENTENDIDO = "NO_ENTENDIDO"
 ACCIONES = {PEDIDO, CANCELAR, RECHAZO, REPETIR_ULTIMO, FUERA_DE_CARTA,
             ACLARAR, CORTESIA_ACC, NO_ENTENDIDO}
 
+#Clase Resultado, es el tipo de objeto que devuelve la función interpretar(). 
+# Contiene la acción (PEDIDO, CANCELAR, etc.) y los parámetros del pedido si corresponde.
 @dataclass
 class Resultado:
     accion: str
     trago_id: Optional[int] = None   # solo si accion == PEDIDO
     cantidad: int = 1                # por defecto 1
     con_hielo: bool = True           # por defecto con hielo
-    doble: bool = False
     desconocidas: int = 0     
 
+# Funcion Normalizar: convierte el texto a minúsculas, elimina tildes y 
+# signos de puntuación, y reemplaza el comodín [unk] por un espacio. 
+# Esto facilita la interpretación del texto por parte del sistema.
 def normalizar(texto):
     """Minúsculas, sin tildes ni signos, sin el comodín [unk]."""
     texto = texto.lower().replace("[unk]", " ")
@@ -180,6 +189,8 @@ def normalizar(texto):
     texto = "".join(c if c.isalnum() or c == " " else " " for c in texto)
     return " ".join(texto.split())
 
+#Funcion interpretar: toma un texto de entrada y devuelve un objeto Resultado.
+# La función analiza el texto palabra por palabra, identificando bebidas, cantidades, negaciones y otros comandos.
 def interpretar(texto):
     """Texto -> Resultado. Siempre devuelve una acción válida."""
 
@@ -195,7 +206,7 @@ def interpretar(texto):
  
     # 2) Recorrer las palabras EN ORDEN
     afirmadas, negadas = set(), set()
-    negando = excluir = doble = False
+    negando = excluir = False
     con_hielo = True
     cantidad = None
     for p in ps:
@@ -218,8 +229,6 @@ def interpretar(texto):
             excluir = False
         elif p in CANTIDADES and cantidad is None:
             cantidad = CANTIDADES[p]
-        elif p in DOBLE:
-            doble = True
  
     # 3) Negaciones: ante la duda, no servir
     if negadas or (pw & NEGACIONES):
@@ -251,7 +260,7 @@ def interpretar(texto):
         return res(ACLARAR)
 
     return res(PEDIDO, trago_id=trago, cantidad=cantidad or 1,
-               con_hielo=con_hielo, doble=doble)
+               con_hielo=con_hielo)
  
  
 def interpretar_id(texto):
@@ -302,10 +311,10 @@ if __name__ == "__main__":
         ("gin tonic", PEDIDO, 5),
         ("un gin", PEDIDO, 5),
         ("ron con coca", PEDIDO, 6),
-        ("un ron", PEDIDO, 6),
+        ("un ron", PEDIDO, 26),
         ("cuba libre", PEDIDO, 6),
         ("vino con pomelo", PEDIDO, 7),
-        ("una cerveza", PEDIDO, 8),
+        ("una cerveza", PEDIDO, 18),
         ("cerveza con limon", PEDIDO, 8),
         ("un negroni", PEDIDO, 9),
         ("un mojito", PEDIDO, 10),
@@ -322,21 +331,21 @@ if __name__ == "__main__":
         ("dos fernet con coca", PEDIDO, 2, {"cantidad": 2}),
         ("dos mojito", PEDIDO, 10, {"cantidad": 2}),
         ("fernet con coca sin hielo", PEDIDO, 2, {"con_hielo": False}),
-        ("fernet con coca doble", PEDIDO, 2, {"doble": True}),
+        ("fernet con coca doble", PEDIDO, 2, {"cantidad": 2}),
         # --- Ambiguos ---
         ("un vodka", ACLARAR, None),
-        ("un vino", ACLARAR, None),
-        ("un whisky", ACLARAR, None),
-        ("una coca", ACLARAR, None),
-        ("naranja", ACLARAR, None),
+        ("un vino", PEDIDO, 19),
+        ("un whisky", PEDIDO, 24),
+        ("una coca", PEDIDO, 30),
+        ("naranja", PEDIDO, 32),
         ("vodka con fernet", ACLARAR, None),
         ("mojito con coca", ACLARAR, None),
         ("un trago", ACLARAR, None),
         ("un fizz", ACLARAR, None),
         # --- Fuera de la carta ---
-        ("baileys", FUERA_DE_CARTA, None),
-        ("una sidra", FUERA_DE_CARTA, None),
-        ("fernet con coca y baileys", FUERA_DE_CARTA, None),
+        ("baileys", PEDIDO, 22),
+        ("una sidra", PEDIDO, 20),
+        ("fernet con coca y baileys", ACLARAR, None),
         # --- Negaciones, cancelar, etc. ---
         ("no quiero fernet con coca", RECHAZO, None),
         ("no quiero un mojito", RECHAZO, None),
@@ -347,6 +356,8 @@ if __name__ == "__main__":
         ("gracias", CORTESIA_ACC, None),
         ("[unk]", NO_ENTENDIDO, None),
         ("", NO_ENTENDIDO, None),
+        ("quiero un fernet para mi", PEDIDO, 2),
+        ("una gancia", PEDIDO, 28),
     ]
     fallos = 0
     for frase, accion, trago, *extra in pruebas:
