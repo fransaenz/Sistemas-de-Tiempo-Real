@@ -39,19 +39,23 @@ SINONIMOS = {
     "vino": VINO, "tinto": VINO, "blanco": VINO, "veneco": VINO, 
     "malbec": VINO, "cabernet": VINO, "merlot": VINO, "totin": VINO, 
 
-    "gin": GIN, "beefeater": GIN, "tanqueray": GIN, "ginebra": GIN, "ginebrita": GIN, "ginebrita": GIN,
+    "gin": GIN, "beefeater": GIN, "tanqueray": GIN, "ginebra": GIN, "ginebrita": GIN, 
     
-    "ron": RON, "havana": RON, "bacardi": RON, "club": RON,
+    "ron": RON, "havana": RON, "bacardi": RON, "club": RON, 
+    "roncito": RON, "ronsito": RON, "ronaldo": RON, "ronaldinho": RON,
     
-    "whisky": WHISKY, "tequila": TEQUILA, "quilate": TEQUILA, 
+    "whisky": WHISKY, "tequila": TEQUILA, "quilate": TEQUILA, "quila": TEQUILA,
     
-    "jagger": LICOR, "jagermeister": LICOR, "licor": LICOR,
+    "jager": LICOR,"jagger": LICOR, "jagermeister": LICOR, "licor": LICOR,
+    "yaguer": LICOR, "yager": LICOR, "yagermeister": LICOR, "yaguermaster": LICOR,
     
     "vermut": VERMUT, "vermu": VERMUT, "aperol": APEROL,
     
     "champan": CHAMPAGNE, "champagne": CHAMPAGNE, "sidra": SIDRA,
+    "yampan": CHAMPAGNE, "yampagne": CHAMPAGNE,
     
-    "pomelo" : POMELO, "limon": LIMON, "lima": LIMON, "soda": SODA,
+    "limon": LIMON, "lima": LIMON, "limonada": LIMON, "limoncito": LIMON, 
+    "pomelo" : POMELO, "soda": SODA, "sodita": SODA
     
 }
 
@@ -147,7 +151,7 @@ IGNORADAS = {
     "mas", "menos", "poco", "mucho",                            # modificadores
     "quiero", "dame", "servime", "traeme", "prepara", "preparame",
     "el", "la", "los", "las", "con", "de", "del", "para", "por",
-    "y", "o", "favor", "unos", "unas",
+    "y", "o", "favor", "unos", "unas", "anana"
 }
 
 DESCONOCIDA = {"[unk]"}
