@@ -25,7 +25,8 @@ SINONIMOS = {
     "campari": CAMPARI,  "gancia": GANCIA,
     "tonic": TONICA, "tonica": TONICA, "baileys": BAILEYS,
 
-    "coca": COCA, "coca cola": COCA, "cola": COCA, "coquita": COCA,
+    "coca": COCA, "cola": COCA, "coquita": COCA, "cocucha": COCA, 
+    "cocacola": COCA, "caco": COCA, "cocarda": COCA,
     
     "sprite": SPRITE, "spray": SPRITE, "sprayt": SPRITE, "esprai": SPRITE,
 
@@ -197,7 +198,7 @@ def normalizar(texto):
 # La función analiza el texto palabra por palabra, identificando bebidas, cantidades, negaciones y otros comandos.
 def interpretar(texto):
     """Texto -> Resultado. Siempre devuelve una acción válida."""
-
+    texto = texto or ""
     desconocidas = texto.lower().count("[unk]")
     ps = normalizar(texto).split()
     pw = set(ps)
